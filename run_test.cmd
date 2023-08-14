@@ -1,0 +1,7 @@
+@echo "Check without index"
+docker exec postgres_container /bin/sh -c "/usr/bin/psql -U user_course -d db_course -a -f /test/plan.sql "
+docker exec postgres_container /bin/sh -c "/usr/bin/pgbench -U user_course -f /test/test.sql -c 1 -T 20 db_course"
+@echo "Add index"
+docker exec postgres_container /bin/sh -c "/usr/bin/psql -U user_course -d db_course -a -f /test/add_index.sql "
+docker exec postgres_container /bin/sh -c "/usr/bin/psql -U user_course -d db_course -a -f /test/plan.sql "
+docker exec postgres_container /bin/sh -c "/usr/bin/pgbench -U user_course -f /test/test.sql -c 1 -T 20 db_course"
